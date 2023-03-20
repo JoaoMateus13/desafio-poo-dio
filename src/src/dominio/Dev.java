@@ -2,6 +2,7 @@ package dominio;
 
 import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 public class Dev {
@@ -14,15 +15,23 @@ public class Dev {
 
 
     public void inscreverBootcamp(Bootcamp bootcamp){
-
+        this.conteudosInscritos.addAll(bootcamp.getConteudos());
+        bootcamp.getDevesInscritos().add(this);
     }
 
     public void progredir(){
+        Optional<conteudo> conteudo = this.conteudosInscritos.stream().findFirst();
+        if(conteudo.isPresent()){
+            this.conteudosConcluidos.add(conteudo.get());
+            this.conteudosInscritos.remove(conteudo.get());
+        } else {
+            System.err.println("Voce nao esta matriculado em nenhum conteudo");
+        }
 
     }
 
-    public void calcularTotalXP(){
-
+    public double calcularTotalXP(){
+        return this.conteudosConcluidos.stream().mapToDouble(conteudo::calcular_XP).sum();
     }
 
     public String getNome() {

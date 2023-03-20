@@ -10,7 +10,7 @@ public class Mentoria extends conteudo{
 
     @Override
     public double calcular_XP() {
-        return 0;
+        return XP_PADRAO + 20d;
     }
 
     public LocalDate getData() {
